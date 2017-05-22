@@ -1,0 +1,16 @@
+---
+- hosts: default
+  become: true
+  vars:
+    kernel_dir: /usr/src/kernel
+  tasks:
+  - name: Make {{kernel_dir}} Directory
+    file: path={{kernel_dir}} state=directory mode=0777
+
+  - name: Download GIT
+    apt: name=git state=present update_cache=yes
+
+  - name: Clone LINUX kernel
+    git: repo=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git dest={{kernel_dir}}
+
+ 
