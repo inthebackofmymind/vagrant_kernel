@@ -7,7 +7,7 @@
 # you're doing.
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "bento/ubuntu-16.04"
 
   config.vm.network "public_network"
 
@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
    end
   
    config.vm.provision "shell", inline: <<-SHELL
-#     apt-get update
+     apt-get update
    SHELL
 
    config.vm.provision "ansible" do |ansible|

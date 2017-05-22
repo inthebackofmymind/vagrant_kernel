@@ -3,14 +3,18 @@
   become: true
   vars:
     kernel_dir: /usr/src/kernel
+
   tasks:
   - name: Make {{kernel_dir}} Directory
     file: path={{kernel_dir}} state=directory mode=0777
 
-  - name: Download GIT
-    apt: name=git state=present update_cache=yes
+  - name: Uncomment /etc/gai.conf for IPV4
+    lineinfile: dest=/etc/gai.conf regexp='#precedence ::ffff:0:0/96  100' line=' precedence ::ffff:0:0/96  100' state=present
+
+  - name: Install GIT
+    apt: name=git state=present update_cache=yes 
 
   - name: Clone LINUX kernel
-    git: repo=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git dest={{kernel_dir}}
+    git: repo=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git dest={{kernel_dir}} version=master
 
  
